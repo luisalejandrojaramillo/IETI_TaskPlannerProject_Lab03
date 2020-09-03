@@ -1,7 +1,15 @@
-https://ietitaskplannerlab.herokuapp.com/
+## Enlaces
 
-https://taskplannerproject.azurewebsites.net/
+[Heroku] (https://ietitaskplannerlab.herokuapp.com/)
+[Azure] (https://taskplannerproject.azurewebsites.net/)
 
+
+## Author
+Luis Alejandro Jaramillo R.
+
+## Credenciales para ingresar
+* Email:luis
+* Pwd:123
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
