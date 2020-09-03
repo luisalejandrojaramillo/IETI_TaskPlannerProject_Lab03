@@ -1,7 +1,8 @@
 ## Enlaces
 
-[Heroku] (https://ietitaskplannerlab.herokuapp.com/)
-[Azure] (https://taskplannerproject.azurewebsites.net/)
+[Heroku](https://ietitaskplannerlab.herokuapp.com/)
+
+[Azure](https://taskplannerproject.azurewebsites.net/)
 
 
 ## Author
