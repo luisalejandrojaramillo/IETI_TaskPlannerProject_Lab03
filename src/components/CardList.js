@@ -8,6 +8,7 @@ export default class CardList extends React.Component {
     constructor(props) {
         super(props);
     }
+    
     render() {
         const cardList = this.props.task.map((task, i) => {
             return (
@@ -17,7 +18,8 @@ export default class CardList extends React.Component {
                     name={task.responsible.name}
                     email={task.responsible.email}
                     status={task.status}
-                    dueDate={task.dueDate} />
+                    dueDate={task.dueDate} 
+                />
             );
         })
         return (
