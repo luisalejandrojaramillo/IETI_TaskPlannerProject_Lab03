@@ -60,7 +60,7 @@ export class Login extends React.Component{
                                 color="primary"
                                 className="submit"
                             >
-                                Sign in
+                                Ingresar
                             </Button>
                         </form>
                     </Paper>

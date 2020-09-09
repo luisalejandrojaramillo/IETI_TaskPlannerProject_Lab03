@@ -20,51 +20,49 @@ import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 class App extends Component{
   constructor(props) {
     super(props);
-    const LoginView = () => (
-      <Login handleSignIn={this.handleSignIn}/>
-    );
-    const Main = () => (
-      <MainView/>
-    );
+    localStorage.setItem('email',"luis");
+    localStorage.setItem('password',"123");
+  }  
+
+    /**
     this.state = {loginView: LoginView,main: Main,isLoggedIn:false}
     this.handleSignIn=this.handleSignIn.bind(this);
 
-    localStorage.setItem('email',"luis");
-    localStorage.setItem('password',"123");
+    
 
     if (!localStorage.getItem("isLoggedIn")){
       localStorage.setItem("isLoggedIn",this.state.isLoggedIn);
-    }
-  }
+    }*/
+  
   render(){
 
+    const LoginView = () => (
+      <Login />
+    );
+    const Main = () => (
+      <MainView />
+    );
+
+
+    /** 
     const LoginView = this.state.loginView;
     const Main = this.state.main;
-    const isLoggedIn = this.state.isLoggedIn || (localStorage.getItem("isLoggedIn") == "true" );
+    const isLoggedIn = this.state.isLoggedIn || (localStorage.getItem("isLoggedIn") == "true" );  */
     let vista;
-    if (!isLoggedIn){
-      vista = (
-          <div>
-              <ul>
-                  <li><Link to="/">Login</Link></li>
-              </ul>
-              <div>
-                  <Route exact path="/" component={LoginView}/>
-              </div>
-          </div>
 
+    if (!localStorage.getItem("isLoggedIn")){
+      vista = (
+        <div>
+          <Route exact path="/" component={LoginView} />          
+          <Route exact path="/Login" component={LoginView} />
+        </div>   
       );       
     }else {
       vista = (
-          <div>
-              <ul>
-                  <li><Link to="/Main">Main</Link></li>
-              </ul>
-              <div>
-                    <Route path="/Main" component={Main}/>
-              </div>
-          </div>
-
+        <div>
+          <MainView />
+          <Route exact path="/Main" component={Main} />          
+        </div> 
       );    
 
     }
@@ -77,12 +75,7 @@ class App extends Component{
         </Router>
     );
     
-  }
-
-  handleSignIn(){
-    this.setState({isLoggedIn:true})
-  }
-  
+  } 
 }
 
 
