@@ -94,10 +94,14 @@ export class MainView extends Component{
     }
 
     handleSubmitEdit = (e) => {
-        console.log(this.newname)
+        console.log(this.state.newname)
+
+        const users = JSON.parse(localStorage.getItem("users"));
+        console.log(users)
 
         this.handleOpenEdit();
     }
+    
 
 
 
@@ -113,7 +117,6 @@ export class MainView extends Component{
 
    handleDateChangeFilter = (e) => {
 
-        console.log("Fecha");
         this.state.itemsFiltered[0].dueDate = e;
         this.setState(
             this.state
