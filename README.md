@@ -20,8 +20,8 @@
 Luis Alejandro Jaramillo R.
 
 ## Credenciales para ingresar
-* Email:luis
-* Pwd:123
+* Email:luis@mail.com
+* Pwd: ieti123
 
 ## Steps
 
