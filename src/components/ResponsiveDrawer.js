@@ -17,6 +17,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {Image} from "@material-ui/icons";
+import {MainView} from './MainView';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { Login } from './Login';
 
 const drawerWidth = 240;
 
@@ -53,44 +58,61 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ResponsiveDrawer(props) {
-  const { container } = props;
+  //const { container } = props;
+  const { window } = props;
   const classes = useStyles();
-  const name = localStorage.getItem('name');
-  const email = localStorage.getItem('email');
+  //const name = localStorage.getItem('name');
+  //const email = localStorage.getItem('email');
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handlerLogout = (usr) => {
+    localStorage.setItem("IsLoggedIn",false);
+    localStorage.removeItem("IsLoggedIn");
+    localStorage.removeItem("username");
+    localStorage.removeItem("email");
+    handleDrawerToggle();
+  }
+
+  if (!localStorage.getItem("IsLoggedIn")){
+    return <Login />
+  }
+
   const drawer = (
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      <div>
-        <Image src ="https://s3.us-east-2.amazonaws.com/dzuz14/thumbnails/aurora.jpg"></Image>
-        <Typography variant="h6" noWrap>
-          {name}
-        </Typography>
-        <br>
-        </br>
-        <Typography variant="h6" noWrap>
-          {email}
-        </Typography>
-      </div>
+        <List>
+            <ListItem button key={"Username"}>
+              <ListItemIcon>
+                <AccountBoxIcon> </AccountBoxIcon>  
+              </ListItemIcon>
+              <ListItemText primary={localStorage.getItem("username")} />
+            </ListItem>
+            <ListItem button key={"email"}>
+              <ListItemIcon>
+                <AlternateEmailIcon></AlternateEmailIcon>
+              </ListItemIcon>
+              <ListItemText primary={localStorage.getItem("email")} /> 
+            </ListItem>
+        </List>
       <Divider />
       <List>
-        {['Logout'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button key={"Username"} onClick={(e)=> handlerLogout(e)}>
+          <ListItemIcon>
+            <ExitToAppIcon> </ExitToAppIcon>  
+          </ListItemIcon>
+          <ListItemText primary={"Logout"} />
+        </ListItem>
       </List>
     </div>
   );
+
+  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <div className={classes.root}>
@@ -141,12 +163,18 @@ function ResponsiveDrawer(props) {
           </Drawer>
         </Hidden>
       </nav>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+              <br/>
+              <br/>
+              <MainView> </MainView>  
+      </main>
     </div>
   );
 }
 
 ResponsiveDrawer.propTypes = {
-    container: PropTypes.instanceOf(typeof Element === 'undefined' ? Object : Element),
+  window: PropTypes.func,
 };
 
 export default ResponsiveDrawer;

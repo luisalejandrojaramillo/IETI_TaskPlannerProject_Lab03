@@ -15,7 +15,7 @@ export class Login extends React.Component{
 
     constructor(props){
         super(props);
-        this.state={email:"",password:""};
+        this.state={email:"",password:"",IsLoggedIn: false};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUser = this.handleUser.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
@@ -25,44 +25,55 @@ export class Login extends React.Component{
         return (
             <React.Fragment>
                 <CssBaseline />
-                <main className="layout" onSubmit={this.handleSubmit}>
+                <main className="layout" >
                     <Paper className="paper">
                         <Avatar className="avatar">
                             <LockIcon />
                         </Avatar>
                         <Typography variant="h2">Sign in</Typography>
-                        <form className="form">
-                            <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="email">Email Address</InputLabel>
-                                <Input 
-                                id="email" 
-                                name="email" 
-                                autoComplete="email" 
-                                value = {this.state.email}
-                                onChange = {this.handleUser}
-                                autoFocus />
-                            </FormControl>
-                            <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="password">Password</InputLabel>
-                                <Input
-                                    name="password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="current-password"
-                                    value = {this.state.password}
-                                    onChange = {this.handlePassword}
-                                    autoFocus/>
-                            </FormControl>
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className="submit"
-                            >
-                                Ingresar
-                            </Button>
-                        </form>
+                        <div>
+                            <form className="form">
+                                <FormControl margin="normal" required fullWidth>
+                                    <InputLabel htmlFor="email">Email Address</InputLabel>
+                                    <Input 
+                                    id="email" 
+                                    name="email" 
+                                    autoComplete="email" 
+                                    value = {this.state.email}
+                                    onChange = {this.handleUser}
+                                    autoFocus />
+                                </FormControl>
+                                <FormControl margin="normal" required fullWidth>
+                                    <InputLabel htmlFor="password">Password</InputLabel>
+                                    <Input
+                                        name="password"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="current-password"
+                                        value = {this.state.password}
+                                        onChange = {this.handlePassword}
+                                        autoFocus/>
+                                </FormControl>
+                                <Button onClick={this.handleSubmit}
+                                    type="submit"
+                                    fullWidth
+                                    variant="outlined"
+                                    color="primary"
+                                    className="submit"
+                                >
+                                    Ingresar
+                                </Button>
+                                <Button
+                                        variant="outlined"
+                                        type ="submit"
+                                        fullWidth
+                                        color="primary"
+                                        href = "/signup"
+                                    >
+                                        Sign Up
+                                </Button>
+                            </form>
+                        </div> 
                     </Paper>
                 </main>
             </React.Fragment>
@@ -76,13 +87,28 @@ export class Login extends React.Component{
         this.setState({password: userpwd.target.value});
     }
     handleSubmit(){
-
-        if (localStorage.getItem("email") === this.state.email && localStorage.getItem("password") === this.state.password){
-            localStorage.setItem("isLoggedIn",true);
-            console.log("Ingrese con mi user")
-        }else{
-            console.log("Bad User")
+        if(localStorage.getItem("users")==null){
+            localStorage.setItem("users",JSON.stringify([{"username":"luis","email":"luis@mail.com","password":"ieti123"}]));
+        } 
+        console.log(localStorage.getItem("users"));
+        var listUsers = JSON.parse(localStorage.getItem("users"));
+        console.log(listUsers);
+        console.log(this.props);
+        var ingreso = false;
+        for (var i = 0; i < listUsers.length; i++){
+            if (listUsers[i].email == this.state.email && listUsers[i].password == this.state.password ){
+                localStorage.setItem("username",listUsers[i].username);
+                localStorage.setItem("email",listUsers[i].email);
+                localStorage.setItem("IsLoggedIn",true);
+                ingreso = true;
+            }
         }
-
+        if (!ingreso){
+            alert("Credenciales Invalidas :(");
+        }else {
+            //alert("Cambie el hpta path porfaaaaaaaaaaaaaaaa");
+            window.location.href = "/todo";
+            this.props.history.push("/todo");
+        }
     }
 }
